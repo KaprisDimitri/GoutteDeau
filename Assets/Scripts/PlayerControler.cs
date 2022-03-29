@@ -15,13 +15,13 @@ public class PlayerControler : MonoBehaviour
     PlayerInputAction inputActions;
     GameObject ballSpawn;
     float health;
-   public  bool aim;
+    public bool aim;
     public bool load;
     public bool shoot;
 
     private void Awake()
     {
-        
+
     }
     // Start is called before the first frame update
     void Start()
@@ -32,23 +32,23 @@ public class PlayerControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePlayer(inputActions.PlayerMove.Move.ReadValue<Vector2>());
+        //MovePlayer(inputActions.PlayerMove.Move.ReadValue<Vector2>());
 
-        if(load)
+        if (load)
         {
             GrossirBall();
         }
     }
 
 
-    void InitPlayerControler ()
+    void InitPlayerControler()
     {
         inputActions = new PlayerInputAction();
         inputActions.PlayerMove.Move.Enable();
         inputActions.PlayerMove.Aim.Enable();
-        
+
         inputActions.PlayerMove.Aim.performed += AimingOrNot;
-        
+
 
 
         health = 3;
@@ -57,9 +57,9 @@ public class PlayerControler : MonoBehaviour
 
     }
 
-    public void AjouterVie (float vie)
+    public void AjouterVie(float vie)
     {
-        if(TropVie())
+        if (TropVie())
         {
             health += vie;
             GrossirPlayer(health);
@@ -81,31 +81,30 @@ public class PlayerControler : MonoBehaviour
             return false;
         }
         return true;
-
     }
 
 
-    public bool TropVie ()
+    public bool TropVie()
     {
         if (health >= healthMax)
         {
             return false;
         }
         return true;
-           
+
     }
 
-    void GrossirPlayer (float health)
+    void GrossirPlayer(float health)
     {
         gameObject.transform.localScale = new Vector3(health, health, health);
     }
 
-    public void MovePlayer (Vector3 direction)
-    {
-        GetComponent<Rigidbody>().AddForce(new Vector3(direction.x,0,direction.y) * vitesseDeplacement * Time.deltaTime);
-    }
+    //public void MovePlayer(Vector3 direction)
+    //{
+    //    GetComponent<Rigidbody>().AddForce(new Vector3(direction.x, 0, direction.y) * vitesseDeplacement * Time.deltaTime);
+    //}
 
-    void EnableShooting (bool active)
+    void EnableShooting(bool active)
     {
         if (active)
         {
@@ -116,16 +115,14 @@ public class PlayerControler : MonoBehaviour
         else
         {
             inputActions.PlayerMove.Shoot.Disable();
-            
         }
-
     }
 
-    
 
-    void AimingOrNot (InputAction.CallbackContext obj)
+
+    void AimingOrNot(InputAction.CallbackContext obj)
     {
-        if(aim)
+        if (aim)
         {
             aim = false;
             EnableShooting(false);
@@ -141,16 +138,13 @@ public class PlayerControler : MonoBehaviour
     }
     void Shoot(InputAction.CallbackContext obj)
     {
-        
-        if(obj.performed)
+
+        if (obj.performed)
         {
             ballSpawn = Instantiate(balleToSpawn, spawnBall.transform.position, gameObject.transform.rotation);
             RetirerVie(0.1f);
             shoot = true;
             load = true;
-            
-
-            
         }
         else if (obj.canceled)
         {
@@ -161,11 +155,10 @@ public class PlayerControler : MonoBehaviour
 
     }
 
-    void GrossirBall ()
+    void GrossirBall()
     {
         if (ballSpawn.GetComponent<BalleTirer>().health < ballSpawn.GetComponent<BalleTirer>().maxHealth && PasAsserVie())
         {
-
             ballSpawn.GetComponent<BalleTirer>().GrossirBalle(Time.deltaTime * vitesseGrossisementBalle);
             ballSpawn.transform.position = spawnBall.transform.position;
             RetirerVie(Time.deltaTime * vitesseGrossisementBalle);
@@ -176,13 +169,9 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    void TirerBalle ()
+    void TirerBalle()
     {
         ballSpawn.GetComponent<Rigidbody>().useGravity = true;
-        ballSpawn.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward*vitesseDeLancer);
+        ballSpawn.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * vitesseDeLancer);
     }
-
-
-
-
- }
+}

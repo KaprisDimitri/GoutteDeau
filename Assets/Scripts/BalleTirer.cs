@@ -17,18 +17,18 @@ public class BalleTirer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void GrossirBalle(float health)
     {
         this.health += health;
-        gameObject.transform.localScale = new Vector3(this.health*2, this.health * 2, this.health * 2);
+        gameObject.transform.localScale = new Vector3(this.health * 2, this.health * 2, this.health * 2);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Movable")
+        if (collision.gameObject.tag == "Movable")
         {
             collision.GetContact(0);
             collision.gameObject.GetComponent<Rigidbody>().AddForceAtPosition((collision.gameObject.transform.position - gameObject.transform.position).normalized * gameObject.GetComponent<Rigidbody>().velocity.z, collision.GetContact(0).point);
