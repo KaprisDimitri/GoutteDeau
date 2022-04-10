@@ -13,6 +13,7 @@ public class ZoneVent : MonoBehaviour
 
    
     public bool active;
+    
 
     List<GameObject> objetDansVent;
 
@@ -25,7 +26,10 @@ public class ZoneVent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        active = activation.active;
+        if (activation != null)
+        {
+            active = activation.active;
+        }
         if(active)
         {
             EmissionForce();

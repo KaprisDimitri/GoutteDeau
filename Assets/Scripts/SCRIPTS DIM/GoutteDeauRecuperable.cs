@@ -33,7 +33,7 @@ public class GoutteDeauRecuperable : MonoBehaviour
 
     void AjouterVieAPlayer ()
     {
-        if (player.GetComponent<PlayerControler>().TropVie())
+        if (player.GetComponent<PlayerHealth>().TropVie())
         {
             healthGiven += Time.deltaTime * vitesseDonner;
             if (healthGiven >= healthToGive)
@@ -41,7 +41,7 @@ public class GoutteDeauRecuperable : MonoBehaviour
                 healthGiven = healthToGive;
             }
             ChangeGrosseur();
-            player.GetComponent<PlayerControler>().AjouterVie(Time.deltaTime * vitesseDonner);
+            player.GetComponent<PlayerHealth>().AjouterVie(Time.deltaTime * vitesseDonner);
             DestroyGoutteDeau();
         }
     
