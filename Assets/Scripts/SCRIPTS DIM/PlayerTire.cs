@@ -19,6 +19,7 @@ public class PlayerTire : MonoBehaviour
     GameObject ballSpawn;
 
     bool load;
+    bool shoot;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +33,10 @@ public class PlayerTire : MonoBehaviour
         if (load)
         {
             GrossirBall();
+        }
+        if(shoot)
+        {
+            ballSpawn.transform.position = spawBallPos.transform.position;
         }
     }
 
@@ -56,7 +61,8 @@ public class PlayerTire : MonoBehaviour
         {
             if (GetComponent<PlayerHealth>().PasAsserVie())
             {
-                ballSpawn = Instantiate(balleToSpawn, spawBallPos.transform.position, gameObject.transform.rotation);
+                ballSpawn = Instantiate(balleToSpawn, spawBallPos.transform.position, gameObject.transform.rotation, spawBallPos.transform);
+               // ballSpawn.GetComponent<Rigidbody>().isKinematic = true;
                 GetComponent<PlayerHealth>().RetirerVie(0.1f);
 
                 load = true;
@@ -78,16 +84,24 @@ public class PlayerTire : MonoBehaviour
             ballSpawn.GetComponent<BalleTirer>().GrossirBalle(Time.deltaTime * vitesseGrossisementBalle);
             ballSpawn.transform.position = spawBallPos.transform.position;
             GetComponent<PlayerHealth>().RetirerVie(Time.deltaTime * vitesseGrossisementBalle);
+            shoot = true;
         }
         else
         {
             load = false;
+           
         }
     }
 
     void TirerBalle()
     {
-        ballSpawn.GetComponent<Rigidbody>().useGravity = true;
-        ballSpawn.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,0.5f,1) * vitesseDeLancer);
+        shoot = false;
+        // ballSpawn.GetComponent<Rigidbody>().isKinematic = false;
+        if (ballSpawn != null)
+        {
+            ballSpawn.transform.parent = null;
+            ballSpawn.GetComponent<Rigidbody>().useGravity = true;
+            ballSpawn.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0.5f, 1) * vitesseDeLancer);
+        }
     }
 }

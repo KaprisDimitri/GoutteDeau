@@ -23,7 +23,7 @@ public class BalleTirer : MonoBehaviour
     public void GrossirBalle(float health)
     {
         this.health += health;
-        gameObject.transform.localScale = new Vector3(this.health * 2, this.health * 2, this.health * 2);
+        gameObject.transform.localScale = new Vector3(this.health , this.health , this.health );
     }
 
     private void OnCollisionEnter(Collision collision)

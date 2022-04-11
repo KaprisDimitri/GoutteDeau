@@ -27,6 +27,12 @@ public class PlayerHealth : MonoBehaviour
         this.healthMin = healthMin;
     }
 
+    public void ResetPlayer ()
+    {
+        health = 1;
+        GrossirPlayer(health);
+    }
+
     public void AjouterVie(float vie)
     {
         if (TropVie())
@@ -64,7 +70,7 @@ public class PlayerHealth : MonoBehaviour
 
     public bool Mort()
     {
-        if (health <= 0)
+        if (health <= 0.2)
         {
             return true;
         }
@@ -84,6 +90,6 @@ public class PlayerHealth : MonoBehaviour
 
     void GrossirPlayer(float health)
     {
-        gameObject.transform.localScale = new Vector3(health, health, health);
+        gameObject.transform.localScale = new Vector3(health/4, health / 4, health / 4);
     }
 }

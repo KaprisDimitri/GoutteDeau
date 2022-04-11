@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class ThirdPersonController : MonoBehaviour
 {
+    [SerializeField] GameObject groundDetect;
+
     //input fields
     private PlayerInputAction playerActionsAsset;
     private InputAction move;
@@ -89,15 +91,34 @@ public class ThirdPersonController : MonoBehaviour
 
     private void DoJump(InputAction.CallbackContext obj)
     {
+        //forceDirection += Vector3.up * jumpForce;
+        Debug.Log("EssayeDeSauter");
         if (IsGrounded())
         {
+            Debug.Log("Saute");
             forceDirection += Vector3.up * jumpForce;
         }
     }
 
     private bool IsGrounded()
     {
-        Ray ray = new Ray(this.transform.position + Vector3.up * 0.25f, Vector3.down);
+
+        Collider[] collisionSol = Physics.OverlapSphere(groundDetect.transform.position, 0.2f);
+        if(collisionSol.Length > 0)
+        {
+            for(int i = 0; i<collisionSol.Length;i++)
+            {
+                Debug.Log(collisionSol[i].name);
+                if(collisionSol[i].gameObject.layer == 6)
+                {
+                    return true;
+                }
+            }
+            
+           
+        }
+        return false;
+        Ray ray = new Ray(this.transform.position, Vector3.down);
         if (Physics.Raycast(ray, out RaycastHit hit, 0.3f))
         {
             return true;

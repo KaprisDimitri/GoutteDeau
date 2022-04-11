@@ -10,8 +10,9 @@ public class ZoneVent : MonoBehaviour
     [SerializeField] GameObject endPoint;
 
     [SerializeField] float ForceVent;
+    [SerializeField] GameObject VisuZoneVent;
 
-   
+
     public bool active;
     
 
@@ -32,7 +33,12 @@ public class ZoneVent : MonoBehaviour
         }
         if(active)
         {
+            VisuZoneVent.SetActive(true);
             EmissionForce();
+        }
+        else
+        {
+            VisuZoneVent.SetActive(false);
         }
     }
 
@@ -66,7 +72,7 @@ public class ZoneVent : MonoBehaviour
         {
             if (objetDansVent[i] != null)
             {
-                objetDansVent[i].GetComponent<Rigidbody>().AddForce(((endPoint.transform.position - startPoint.transform.position).normalized) * ForceVent);
+                objetDansVent[i].GetComponent<Rigidbody>().velocity = (((endPoint.transform.position - startPoint.transform.position).normalized) * ForceVent);
             }
         }
     }

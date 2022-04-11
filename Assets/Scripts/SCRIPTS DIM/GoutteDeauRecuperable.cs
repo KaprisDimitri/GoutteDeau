@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GoutteDeauRecuperable : MonoBehaviour
 {
+    [SerializeField] bool infinie;
+
     [SerializeField] float healthToGive;
     [SerializeField] float vitesseDonner;
     GameObject player;
@@ -36,13 +38,17 @@ public class GoutteDeauRecuperable : MonoBehaviour
         if (player.GetComponent<PlayerHealth>().TropVie())
         {
             healthGiven += Time.deltaTime * vitesseDonner;
-            if (healthGiven >= healthToGive)
+            if (!infinie)
             {
-                healthGiven = healthToGive;
+                if (healthGiven >= healthToGive)
+                {
+                    healthGiven = healthToGive;
+                }
+                ChangeGrosseur();
+               // player.GetComponent<PlayerHealth>().AjouterVie(Time.deltaTime * vitesseDonner);
+                DestroyGoutteDeau();
             }
-            ChangeGrosseur();
             player.GetComponent<PlayerHealth>().AjouterVie(Time.deltaTime * vitesseDonner);
-            DestroyGoutteDeau();
         }
     
     }
